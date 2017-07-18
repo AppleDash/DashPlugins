@@ -21,4 +21,14 @@ public class SemVerTest {
     public void testInvalidParsing() {
         new SemVer("potato");
     }
+
+    @Test
+    public void testComparisons() {
+        SemVer ALPHA = new SemVer("0.1.5");
+        SemVer BETA = new SemVer("0.2.3");
+        SemVer ONE = new SemVer("1.0.0");
+        SemVer LATER = new SemVer("2.1.3");
+
+        // TODO: Test this
+    }
 }

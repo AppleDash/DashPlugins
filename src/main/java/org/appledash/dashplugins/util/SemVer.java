@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 /**
  * Represents a version number that adheres to the SemVer standard of versioning.
  */
-public class SemVer {
+public class SemVer implements Comparable<SemVer> {
     private static final Pattern SEMVER_PATTERN = Pattern.compile("^([0-9]+)\\.([0-9]+)\\.([0-9]+)$");
     private final int major;
     private final int minor;
@@ -61,5 +61,20 @@ public class SemVer {
     @Override
     public int hashCode() {
         return this.toString().hashCode();
+    }
+
+    @Override
+    public int compareTo(SemVer other) {
+        int result = major - other.major;
+
+        if (result == 0) {
+            result = minor - other.minor;
+
+            if (result == 0) {
+                result = patch - other.patch;
+            }
+        }
+
+        return result;
     }
 }
