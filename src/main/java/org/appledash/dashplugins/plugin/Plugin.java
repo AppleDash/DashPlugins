@@ -1,32 +1,47 @@
 package org.appledash.dashplugins.plugin;
 
 /**
- * Created by appledash on 7/18/17.
- * Blackjack is best pony.
+ * Represents a language-agnostic plugin.
  */
 public abstract class Plugin {
     protected PluginMeta pluginMeta;
-    private boolean enabled;
 
+    /**
+     * Default constructor for Plugin.
+     * Plugins using this default constructor and not the one that takes PluginMeta MUST set this.pluginMeta in their constructor.
+     */
     protected Plugin() {
 
     }
 
+    /**
+     * Initialize this Plugin with the given PluginMeta.
+     * @param pluginMeta PluginMeta describing this Plugin.
+     */
     public Plugin(PluginMeta pluginMeta) {
         this.pluginMeta = pluginMeta;
     }
 
+    /**
+     * Get the PluginMeta describing this Plugin.
+     * @return PluginMeta
+     */
     public PluginMeta getPluginMeta() {
         return pluginMeta;
     }
 
+    /**
+     * Called when this Plugin is loaded by a PluginManager.
+     */
     public void onLoad() { }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
+    /**
+     * Called when this Plugin is enabled by a PluginManager.
+     */
+    public void onEnable() { }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+    /**
+     * Called when this Plugin is disabled by a PluginManager.
+     */
+    public void onDisable() { }
 }

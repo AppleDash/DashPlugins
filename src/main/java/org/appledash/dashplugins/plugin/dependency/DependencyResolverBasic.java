@@ -5,10 +5,10 @@ import org.appledash.dashplugins.plugin.Plugin;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * Created by appledash on 7/18/17.
- * Blackjack is best pony.
+ * Represents a basic, iterative Dependency resolver.
  */
 public class DependencyResolverBasic implements DependencyResolver {
     @Override
@@ -34,13 +34,14 @@ public class DependencyResolverBasic implements DependencyResolver {
             }
 
             if (!added && !plugins.isEmpty()) {
-                throw new DependencyException("Weird dependencies are going on!");
+                throw new DependencyException("Some Plugins have either unmet or circular dependencies: " + plugins.stream().map(p -> p.getPluginMeta().getName()).collect(Collectors.toList()));
             }
         }
 
         return sorted;
     }
 
+    // TODO: Make more efficient?
     private boolean hasAllDependencies(String[] depNames, List<Plugin> list) {
         List<Plugin> dependencies = new ArrayList<>();
 

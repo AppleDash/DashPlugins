@@ -1,4 +1,4 @@
-package org.appledash.dashplugins.plugin;
+package org.appledash.dashplugins.plugin.type;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -4,8 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by appledash on 7/18/17.
- * Blackjack is best pony.
+ * Represents a version number that adheres to the SemVer standard of versioning.
  */
 public class SemVer {
     private static final Pattern SEMVER_PATTERN = Pattern.compile("^([0-9]+)\\.([0-9]+)\\.([0-9]+)$");
@@ -13,6 +12,11 @@ public class SemVer {
     private final int minor;
     private final int patch;
 
+    /**
+     * Construct a new SemVer instance using the given version string.
+     * @param version Version string.
+     * @throws IllegalArgumentException if version is not valid SemVer.
+     */
     public SemVer(String version) {
         Matcher m = SEMVER_PATTERN.matcher(version);
 
@@ -25,14 +29,26 @@ public class SemVer {
         this.patch = Integer.valueOf(m.group(3));
     }
 
+    /**
+     * Get the major version number of this version.
+     * @return Major version number.
+     */
     public int getMajor() {
         return major;
     }
 
+    /**
+     * Get the minor version number of this version.
+     * @return Minor version number.
+     */
     public int getMinor() {
         return minor;
     }
 
+    /**
+     * Get the patch version number of this version.
+     * @return Patch version number.
+     */
     public int getPatch() {
         return patch;
     }

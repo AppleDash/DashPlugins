@@ -1,13 +1,11 @@
 package org.appledash.dashplugins.plugin.type;
 
 import org.appledash.dashplugins.plugin.PluginMeta;
-import org.appledash.dashplugins.plugin.DeclarePlugin;
 import org.appledash.dashplugins.plugin.InvalidPluginException;
 import org.appledash.dashplugins.plugin.Plugin;
 
 /**
- * Created by appledash on 7/18/17.
- * Blackjack is best pony.
+ * Represents a Plugin written in the Java programming language.
  */
 public abstract class JavaPlugin extends Plugin {
     public JavaPlugin() {
