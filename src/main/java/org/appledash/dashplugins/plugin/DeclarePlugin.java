@@ -15,4 +15,5 @@ public @interface DeclarePlugin {
     String name();
     String description();
     String version();
+    String[] dependencies() default {};
 }

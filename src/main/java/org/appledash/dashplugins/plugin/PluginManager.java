@@ -3,9 +3,7 @@ package org.appledash.dashplugins.plugin;
 import com.google.common.collect.ImmutableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.appledash.dashplugins.plugin.InvalidPluginException;
-import org.appledash.dashplugins.plugin.Plugin;
-import org.appledash.dashplugins.plugin.PluginLoader;
+import org.appledash.dashplugins.plugin.dependency.DependencyResolver;
 
 import java.util.*;
 
@@ -18,6 +16,7 @@ public class PluginManager {
     private final List<PluginLoader> pluginLoaders = new ArrayList<>();
     private final List<Plugin> loadedPlugins = new ArrayList<>();
     private final Map<String, Plugin> nameLookup = new HashMap<>();
+    private DependencyResolver dependencyResolver = (list) -> list; // TODO: Make this useful.
 
     public void registerLoader(PluginLoader pluginLoader) {
         this.pluginLoaders.add(pluginLoader);

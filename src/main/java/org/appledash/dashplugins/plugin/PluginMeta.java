@@ -1,6 +1,5 @@
 package org.appledash.dashplugins.plugin;
 
-import org.appledash.dashplugins.plugin.DeclarePlugin;
 import org.appledash.dashplugins.util.SemVer;
 
 /**
@@ -11,11 +10,13 @@ public class PluginMeta {
     private final String name;
     private final String description;
     private final SemVer version;
+    private String[] dependencies;
 
     public PluginMeta(DeclarePlugin declarePlugin) {
         this.name = declarePlugin.name();
         this.description = declarePlugin.description();
         this.version = new SemVer(declarePlugin.version());
+        this.dependencies = declarePlugin.dependencies();
     }
 
     public String getName() {
@@ -28,5 +29,9 @@ public class PluginMeta {
 
     public SemVer getVersion() {
         return version;
+    }
+
+    public String[] getDependencies() {
+        return this.dependencies;
     }
 }
