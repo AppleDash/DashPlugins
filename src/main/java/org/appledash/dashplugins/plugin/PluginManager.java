@@ -23,9 +23,15 @@ public class PluginManager {
     }
 
     public void loadPlugins() {
+        List<Plugin> plugins = new ArrayList<>();
+
         for (PluginLoader loader : this.pluginLoaders) {
-            loader.loadPlugins().forEach(this::loadPlugin);
+            plugins.addAll(loader.loadPlugins());
         }
+
+        plugins = this.dependencyResolver.sortPlugins(plugins);
+
+        plugins.forEach(this::loadPlugin);
     }
 
     public void loadPlugin(Plugin plugin) {
