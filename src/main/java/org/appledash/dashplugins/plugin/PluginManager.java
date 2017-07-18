@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.appledash.dashplugins.plugin.dependency.DependencyResolver;
+import org.appledash.dashplugins.plugin.dependency.DependencyResolverBasic;
 
 import java.util.*;
 
@@ -16,7 +17,7 @@ public class PluginManager {
     private final List<PluginLoader> pluginLoaders = new ArrayList<>();
     private final List<Plugin> loadedPlugins = new ArrayList<>();
     private final Map<String, Plugin> nameLookup = new HashMap<>();
-    private DependencyResolver dependencyResolver = (list) -> list; // TODO: Make this useful.
+    private DependencyResolver dependencyResolver = new DependencyResolverBasic();
 
     public void registerLoader(PluginLoader pluginLoader) {
         this.pluginLoaders.add(pluginLoader);
