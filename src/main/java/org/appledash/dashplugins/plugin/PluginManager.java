@@ -57,6 +57,13 @@ public class PluginManager {
     }
 
     /**
+     * Enable all of the Plugins we have loaded, if they aren't already.
+     */
+    public void enableAllPlugins() {
+        loadedPlugins.forEach(plugin -> this.setPluginEnabled(plugin, true));
+    }
+
+    /**
      * Load the given Plugin and call its onLoad callback.
      *
      * @param plugin Plugin to load.
@@ -83,6 +90,9 @@ public class PluginManager {
         if (!this.loadedPlugins.contains(plugin)) {
             throw new IllegalStateException("Cannot unload plugin that isn't loaded!");
         }
+
+        this.setPluginEnabled(plugin, false);
+        LOGGER.info("Unloading plugin " + plugin.getPluginMeta().getName());
 
         this.loadedPlugins.remove(plugin);
         this.nameLookup.remove(plugin.getPluginMeta().getName().toLowerCase());
@@ -125,10 +135,18 @@ public class PluginManager {
             throw new IllegalStateException("Cannot set enabled state of a Plugin we don't have loaded!");
         }
 
+        boolean wasEnabled = this.enabledPlugins.contains(plugin);
+
+        if (enabled == wasEnabled) {
+            return;
+        }
+
         if (enabled) {
+            LOGGER.info("Enabling plugin " + plugin.getPluginMeta().getName());
             this.enabledPlugins.add(plugin);
             plugin.onEnable();
         } else {
+            LOGGER.info("Disabling plugin " + plugin.getPluginMeta().getName());
             this.enabledPlugins.remove(plugin);
             plugin.onDisable();
         }

@@ -15,6 +15,7 @@ public class Tester {
         // pluginManager.registerLoader(() -> ImmutableList.of(new Bar(), new PluginExample(), new Foo()));
         pluginManager.registerLoader(new PluginLoaderJARFolder(new java.io.File("./plugins")));
         pluginManager.loadPlugins();
+        pluginManager.enableAllPlugins();
         // System.out.println(pluginManager.getPlugin("Example").get().getPluginMeta().getDescription());
     }
 

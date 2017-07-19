@@ -6,7 +6,7 @@
 
     <groupId>org.appledash</groupId>
     <artifactId>DashPlugins</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
@@ -29,11 +29,6 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.9.11</version>
         </dependency>
     </dependencies>
 

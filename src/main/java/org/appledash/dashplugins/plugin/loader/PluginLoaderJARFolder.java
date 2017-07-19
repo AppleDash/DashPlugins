@@ -4,6 +4,7 @@ import com.google.common.reflect.ClassPath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.appledash.dashplugins.plugin.Plugin;
+import org.appledash.dashplugins.plugin.type.DeclarePlugin;
 
 import java.io.File;
 import java.net.URL;
@@ -12,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by appledash on 7/18/17.
- * Blackjack is best pony.
+ * This PluginLoader attempts to load every Plugin declared in every JAR file in the folder passed in jarFolder.
  */
 public class PluginLoaderJARFolder implements PluginLoader {
     private static final Logger LOGGER = LogManager.getLogger("PluginLoaderJARFolder");
@@ -56,10 +56,21 @@ public class PluginLoaderJARFolder implements PluginLoader {
                 // loadClassLoader knows about every class, so when we actually load the class from the JAR, it can see its dependencies (eg: this library).
                 ClassLoader searchClassLoader = new URLClassLoader(new URL[] { file.toURI().toURL() }, null);
                 ClassLoader loadClassLoader = new URLClassLoader(new URL[] { file.toURI().toURL() });
-                ClassPath cp = ClassPath.from(searchClassLoader);
+                ClassPath searchClassPath = ClassPath.from(searchClassLoader);
 
-                for(ClassPath.ClassInfo info : cp.getAllClasses()) {
+                for(ClassPath.ClassInfo info : searchClassPath.getAllClasses()) {
+                    // TODO: Something seems wrong here.
                     Class clazz = loadClassLoader.loadClass(info.getName());
+
+                    if (!Plugin.class.isAssignableFrom(clazz)) {
+                        continue;
+                    }
+
+                    if (!clazz.isAnnotationPresent(DeclarePlugin.class)) {
+                        LOGGER.warn("Found a class (" + clazz.getName() + ") that extends Plugin but it doesn't have an @DeclarePlugin annotation, skipping it.");
+                        continue;
+                    }
+
                     Plugin plugin = (Plugin) clazz.newInstance();
                     plugins.add(plugin);
                 }

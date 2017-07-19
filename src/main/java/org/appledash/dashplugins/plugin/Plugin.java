@@ -1,9 +1,13 @@
 package org.appledash.dashplugins.plugin;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Represents a language-agnostic plugin.
  */
 public abstract class Plugin {
+    private Logger logger;
     protected PluginMeta pluginMeta;
 
     /**
@@ -28,6 +32,18 @@ public abstract class Plugin {
      */
     public PluginMeta getPluginMeta() {
         return pluginMeta;
+    }
+
+    /**
+     * Get the Logger for this Plugin.
+     * @return Logger instance.
+     */
+    public Logger getLogger() {
+        if (this.logger == null) {
+            this.logger = LogManager.getLogger(this.getPluginMeta().getName());
+        }
+
+        return this.logger;
     }
 
     /**
