@@ -64,6 +64,17 @@ public class SemVer implements Comparable<SemVer> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof SemVer)) {
+            return false;
+        }
+
+        SemVer other = (SemVer) o;
+
+        return other.major == this.major && other.minor == this.minor && other.patch == this.patch;
+    }
+
+    @Override
     public int compareTo(SemVer other) {
         int result = major - other.major;
 

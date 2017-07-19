@@ -1,8 +1,8 @@
 package org.appledash.dashplugins.test.integration;
 
-import com.google.common.collect.ImmutableList;
-import org.appledash.dashplugins.plugin.type.DeclarePlugin;
 import org.appledash.dashplugins.plugin.PluginManager;
+import org.appledash.dashplugins.plugin.loader.PluginLoaderJARFolder;
+import org.appledash.dashplugins.plugin.type.DeclarePlugin;
 import org.appledash.dashplugins.plugin.type.JavaPlugin;
 
 /**
@@ -12,18 +12,24 @@ import org.appledash.dashplugins.plugin.type.JavaPlugin;
 public class Tester {
     public static void main(String[] args) {
         PluginManager pluginManager = new PluginManager();
-        pluginManager.registerLoader(() -> ImmutableList.of(new PluginExample(), new Foo()));
+        // pluginManager.registerLoader(() -> ImmutableList.of(new Bar(), new PluginExample(), new Foo()));
+        pluginManager.registerLoader(new PluginLoaderJARFolder(new java.io.File("./plugins")));
         pluginManager.loadPlugins();
-        System.out.println(pluginManager.getPlugin("Example").get().getPluginMeta().getDescription());
+        // System.out.println(pluginManager.getPlugin("Example").get().getPluginMeta().getDescription());
     }
 
-    @DeclarePlugin(name = "Example", description = "Example plugin", version = "0.1.0")
+    @DeclarePlugin(name = "Example", description = "Example plugin", version = "0.1.0", dependencies = { "Foo", "Bar" })
     private static class PluginExample extends JavaPlugin {
 
     }
 
-    @DeclarePlugin(name = "Foo", description = "Foo plugin", version = "0.1.0", dependencies = "Example")
+    @DeclarePlugin(name = "Foo", description = "Foo plugin", version = "0.1.0")
     private static class Foo extends JavaPlugin {
+
+    }
+
+    @DeclarePlugin(name = "Bar", description = "Bar plugin", version = "0.1.0")
+    private static class Bar extends JavaPlugin {
 
     }
 }
